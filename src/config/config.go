@@ -19,7 +19,7 @@ func LoadEnv() {
 		log.Fatal(err)
 	}
 
-	Port, err = strconv.Atoi(os.Getenv("API_PORT"))
+	Port, err = strconv.Atoi(os.Getenv("PORT"))
 	if err != nil {
 		Port = 5000
 	}
