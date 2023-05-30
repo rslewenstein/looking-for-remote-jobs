@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	telegram.SendToTelegram()
+	telegram.SendMessageToTelegram()
 
 	teste := ".net developer"
 	service.GetAllOportunities(teste)

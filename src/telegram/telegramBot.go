@@ -1,7 +1,9 @@
 package telegram
 
 import (
+	"fmt"
 	"looking-for-remote-jobs/src/config"
+	"looking-for-remote-jobs/src/service"
 	"os"
 
 	"github.com/PaulSonOfLars/gotgbot"
@@ -12,7 +14,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-func SendToTelegram() {
+func SendMessageToTelegram() {
 	log := zap.NewProductionEncoderConfig()
 	log.EncodeLevel = zapcore.CapitalLevelEncoder
 	log.EncodeTime = zapcore.RFC3339TimeEncoder
@@ -27,11 +29,22 @@ func SendToTelegram() {
 	}
 	logger.Sugar().Info("Success!")
 	updater.StartCleanPolling()
-	updater.Dispatcher.AddHandler(handlers.NewMessage(Filters.Text, echo))
+	updater.Dispatcher.AddHandler(handlers.NewMessage(Filters.Text, sendToTelegram))
 	updater.Idle()
 }
 
-func echo(b ext.Bot, u *gotgbot.Update) error {
-	b.SendMessage(u.EffectiveChat.Id, u.EffectiveMessage.Text)
+func receiveMessage(message string) string {
+	text := message
+	fmt.Println("MESSAGE", text)
+	return service.GetAllOportunities(text)
+}
+
+func sendToTelegram(b ext.Bot, u *gotgbot.Update) error {
+	text := u.EffectiveMessage.Text
+	if text != "" {
+		b.SendMessage(u.EffectiveChat.Id, receiveMessage(text))
+	} else {
+		b.SendMessage(u.EffectiveChat.Id, "Enter a job")
+	}
 	return nil
 }
