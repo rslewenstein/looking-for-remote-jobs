@@ -4,6 +4,9 @@ import (
 	"os"
 
 	"github.com/PaulSonOfLars/gotgbot"
+	"github.com/PaulSonOfLars/gotgbot/ext"
+	"github.com/PaulSonOfLars/gotgbot/handlers"
+	"github.com/PaulSonOfLars/gotgbot/handlers/Filters"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -22,5 +25,11 @@ func SendToTelegram() {
 	}
 	logger.Sugar().Info("Success!")
 	updater.StartCleanPolling()
+	updater.Dispatcher.AddHandler(handlers.NewMessage(Filters.Text, echo))
 	updater.Idle()
+}
+
+func echo(b ext.Bot, u *gotgbot.Update) error {
+	b.SendMessage(u.EffectiveChat.Id, u.EffectiveMessage.Text)
+	return nil
 }
