@@ -1,39 +1,38 @@
-// package main
-
-// import (
-// 	"fmt"
-// 	"log"
-// 	"net/http"
-
-// 	"github.com/gorilla/mux"
-// )
-
-// func home(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Fprintf(w, "Alive...")
-// }
-
-// func handleRequests() {
-// 	myRoute := mux.NewRouter().StrictSlash(true)
-// 	myRoute.HandleFunc("/", home)
-// 	log.Fatal(http.ListenAndServe(":5000", myRoute))
-// }
-
-//	func main() {
-//		handleRequests()
-//	}
 package main
 
 import (
 	"fmt"
-	"log"
-	"looking-for-remote-jobs/src/config"
-
-	"net/http"
+	"looking-for-remote-jobs/src/crawler"
 )
 
-func main() {
-	config.LoadEnv()
+// import (
+// 	"fmt"
+// 	"log"
+// 	"looking-for-remote-jobs/src/config"
 
-	fmt.Printf("Listening on port %d", config.Port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Port), nil))
+// 	"net/http"
+// )
+
+// func main() {
+// 	config.LoadEnv()
+
+// 	fmt.Printf("Listening on port %d", config.Port)
+// 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Port), nil))
+// }
+
+type Opportunity struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Date        string `json:"date"`
+	Url         string `json:"url"`
+}
+
+func check(err error) {
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func main() {
+	crawler.GetOpportunitiesFlexJobs()
 }
