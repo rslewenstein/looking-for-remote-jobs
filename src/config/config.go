@@ -9,7 +9,8 @@ import (
 )
 
 var (
-	Port = 0
+	Port           = 0
+	Telegram_Token = ""
 )
 
 func LoadEnv() {
@@ -23,4 +24,6 @@ func LoadEnv() {
 	if err != nil {
 		Port = 5000
 	}
+
+	Telegram_Token = os.Getenv("TELEGRAM_TOKEN")
 }

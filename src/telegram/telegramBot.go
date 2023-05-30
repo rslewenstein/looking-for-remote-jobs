@@ -1,6 +1,7 @@
 package telegram
 
 import (
+	"looking-for-remote-jobs/src/config"
 	"os"
 
 	"github.com/PaulSonOfLars/gotgbot"
@@ -18,7 +19,8 @@ func SendToTelegram() {
 
 	logger := zap.New(zapcore.NewCore(zapcore.NewConsoleEncoder(log), os.Stdout, zap.InfoLevel))
 
-	updater, err := gotgbot.NewUpdater(logger, "Token")
+	config.LoadEnv()
+	updater, err := gotgbot.NewUpdater(logger, config.Telegram_Token)
 	if err != nil {
 		logger.Panic("Failed!")
 		return
