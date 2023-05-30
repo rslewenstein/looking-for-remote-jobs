@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	teste := ".net+developer"
+	teste := ".net developer"
 	service.GetAllOportunities(teste)
 }

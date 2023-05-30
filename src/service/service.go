@@ -1,6 +1,9 @@
 package service
 
-import "looking-for-remote-jobs/src/crawler"
+import (
+	"looking-for-remote-jobs/src/crawler"
+	"strings"
+)
 
 func GetAllOportunities(job string) string {
 
@@ -8,4 +11,10 @@ func GetAllOportunities(job string) string {
 	// .net+developer
 	crawler.GetOpportunitiesFlexJobs(job)
 	return ""
+}
+
+func replaceSpaceForPlace(text string) string{
+	str := text
+	result := strings.Replace(str, " ", "+", -1)
+	return result
 }
