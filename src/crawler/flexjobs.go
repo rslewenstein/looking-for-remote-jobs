@@ -20,8 +20,8 @@ func check(err error) {
 	}
 }
 
-func GetOpportunitiesFlexJobs() string {
-	url := "https://www.flexjobs.com/search?search=.net+developer&location=&srt=date"
+func GetOpportunitiesFlexJobs(job string) string {
+	url := "https://www.flexjobs.com/search?search="+job+"&location=&srt=date"
 
 	response, err := http.Get(url)
 	defer response.Body.Close()
