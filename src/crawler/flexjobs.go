@@ -3,7 +3,6 @@ package crawler
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"looking-for-remote-jobs/src/util"
 
@@ -28,17 +27,28 @@ func GetOpportunitiesFlexJobs(job string) string {
 	doc, err := goquery.NewDocumentFromReader(response.Body)
 	util.CheckError(err)
 
-	//jobCatergory, err := doc.Find("div.job-category-jobs").Html()
-	// jobCatergory, err := doc.Find("div.job-category-jobs").Find("a.job-title").Html()
-	jobCatergory, err := doc.Find("div.job-category-jobs").Find("ul.p-0").Html()
+	//jobCategory, err := doc.Find("div.job-category-jobs").Html()
+	// jobCategory, err := doc.Find("div.job-category-jobs").Find("a.job-title").Html()
+	// jobCategory, err := doc.Find("div.job-category-jobs").Find("ul.p-0").Html()
+	//jobCategory, err := doc.Find("div.job-category-jobs").Find("li.m-0").Html()
 
-	var s []string
+	// var s []string
 
-	for _, v := range strings.Split(jobCatergory, "data-title=\"") {
-		s = append(s, v)
-		//fmt.Println(strconv.QuoteRuneToASCII((v)))
-	}
+	// // for _, v := range strings.Split(jobCategory, "data-title=\"") {
+	// 	for _, v := range strings.Split(jobCategory, "<li class=") {
+	// 	s = append(s, v)
+	// 	//fmt.Println(strconv.QuoteRuneToASCII((v)))
+	// }
+	// fmt.Println(s)
 
-	fmt.Println(s)
-	return jobCatergory
+	doc.Find("div.job-category-jobs").Find("ul.p-0").Each(func(index int, item *goquery.Selection) {
+		title := item.Find("a.job-title")
+		url, _ := item.Find("li").Attr("data-url")
+		description := item.Find(".job-description")
+		
+		teste := []string{title.Text(), description.Text(), url}
+		fmt.Println(teste)
+	})
+
+	return ""
 }
