@@ -22,8 +22,8 @@ func GetOpportunitiesFlexJobs(job string) string {
 	url := baseUrl + "search?search=" + job + "&location=&srt=date"
 
 	response, err := http.Get(url)
-	defer response.Body.Close()
 	check(err)
+	defer response.Body.Close()
 
 	if response.StatusCode > 400 {
 		fmt.Println("Status code:", response.StatusCode)
