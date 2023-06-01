@@ -3,8 +3,13 @@ package crawler
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+)
+
+const (
+	baseUrl = "https://www.flexjobs.com/"
 )
 
 func check(err error) {
@@ -14,7 +19,7 @@ func check(err error) {
 }
 
 func GetOpportunitiesFlexJobs(job string) string {
-	url := "https://www.flexjobs.com/search?search=" + job + "&location=&srt=date"
+	url := baseUrl + "search?search=" + job + "&location=&srt=date"
 
 	response, err := http.Get(url)
 	defer response.Body.Close()
@@ -31,6 +36,13 @@ func GetOpportunitiesFlexJobs(job string) string {
 	// jobCatergory, err := doc.Find("div.job-category-jobs").Find("a.job-title").Html()
 	jobCatergory, err := doc.Find("div.job-category-jobs").Find("ul.p-0").Html()
 
-	fmt.Println(jobCatergory)
+	var s []string
+
+	for _, v := range strings.Split(jobCatergory, "data-title=\"") {
+		s = append(s, v)
+		//fmt.Println(strconv.QuoteRuneToASCII((v)))
+	}
+
+	fmt.Println(s)
 	return jobCatergory
 }
