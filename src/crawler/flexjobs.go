@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"strings"
 
+	"looking-for-remote-jobs/src/util"
+
 	"github.com/PuerkitoBio/goquery"
 )
 
@@ -12,17 +14,11 @@ const (
 	baseUrl = "https://www.flexjobs.com/"
 )
 
-func check(err error) {
-	if err != nil {
-		fmt.Println(err)
-	}
-}
-
 func GetOpportunitiesFlexJobs(job string) string {
 	url := baseUrl + "search?search=" + job + "&location=&srt=date"
 
 	response, err := http.Get(url)
-	check(err)
+	util.CheckError(err)
 	defer response.Body.Close()
 
 	if response.StatusCode > 400 {
@@ -30,7 +26,7 @@ func GetOpportunitiesFlexJobs(job string) string {
 	}
 
 	doc, err := goquery.NewDocumentFromReader(response.Body)
-	check(err)
+	util.CheckError(err)
 
 	//jobCatergory, err := doc.Find("div.job-category-jobs").Html()
 	// jobCatergory, err := doc.Find("div.job-category-jobs").Find("a.job-title").Html()

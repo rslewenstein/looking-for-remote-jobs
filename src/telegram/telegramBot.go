@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"looking-for-remote-jobs/src/config"
 	"looking-for-remote-jobs/src/service"
+	"looking-for-remote-jobs/src/util"
 	"os"
 
 	"github.com/PaulSonOfLars/gotgbot"
@@ -23,10 +24,8 @@ func SendMessageToTelegram() {
 
 	config.LoadEnv()
 	updater, err := gotgbot.NewUpdater(logger, config.Telegram_Token)
-	if err != nil {
-		logger.Panic("Failed!")
-		return
-	}
+	util.CheckPanic(err)
+
 	logger.Sugar().Info("Success!")
 	updater.StartCleanPolling()
 	updater.Dispatcher.AddHandler(handlers.NewMessage(Filters.Text, sendToTelegram))
