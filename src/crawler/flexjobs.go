@@ -12,13 +12,14 @@ import (
 	"github.com/gocolly/colly"
 )
 
-// const (
-// 	baseUrl = "https://www.flexjobs.com/"
-// )
+const (
+	baseUrl = "https://www.flexjobs.com"
+)
 
 func GetOpportunitiesFlexJobs(job string) string {
 	space := regexp.MustCompile(`\s+`)
 	vagas := []model.Opportunity{}
+
 	c := colly.NewCollector(
 		colly.AllowedDomains("flexjobs.com", "www.flexjobs.com"),
 	)
@@ -29,8 +30,8 @@ func GetOpportunitiesFlexJobs(job string) string {
 		vaga := model.Opportunity{
 			Title:       space.ReplaceAllString(strings.TrimSpace(opportunities.Find("a.job-link").Text()), " "),
 			Description: space.ReplaceAllString(strings.TrimSpace(opportunities.Find("div.job-description").Text()), " "),
-			Date:        "",
-			Url:         opportunities.Find("a.job-link").AttrOr("href", " "),
+			Date:        space.ReplaceAllString(strings.TrimSpace(opportunities.Find("div.job-age").Text()), " "),
+			Url:         baseUrl + opportunities.Find("a.job-link").AttrOr("href", " "),
 		}
 		vagas = append(vagas, vaga)
 	})
@@ -39,7 +40,7 @@ func GetOpportunitiesFlexJobs(job string) string {
 		fmt.Println("Visiting: ", r.URL)
 	})
 
-	c.Visit("https://www.flexjobs.com/search?search=.net+developer&location=&srt=date")
+	c.Visit(baseUrl + "/search?search=" + job + "&location=&srt=date")
 
 	writeJSON(vagas)
 	return ""

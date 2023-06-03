@@ -6,12 +6,12 @@ import (
 )
 
 func GetAllOportunities(job string) string {
-	result := replaceSpaceForPlace(job)
+	result := replaceSpaceForPlus(job)
 	crawler.GetOpportunitiesFlexJobs(result)
 	return ""
 }
 
-func replaceSpaceForPlace(text string) string {
+func replaceSpaceForPlus(text string) string {
 	str := text
 	result := strings.Replace(str, " ", "+", -1)
 	return result
