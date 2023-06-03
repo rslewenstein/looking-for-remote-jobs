@@ -1,54 +1,53 @@
 package crawler
 
 import (
+	"encoding/json"
 	"fmt"
-	"net/http"
-
+	"io/ioutil"
+	"looking-for-remote-jobs/src/model"
 	"looking-for-remote-jobs/src/util"
+	"regexp"
+	"strings"
 
-	"github.com/PuerkitoBio/goquery"
+	"github.com/gocolly/colly"
 )
 
-const (
-	baseUrl = "https://www.flexjobs.com/"
-)
+// const (
+// 	baseUrl = "https://www.flexjobs.com/"
+// )
 
 func GetOpportunitiesFlexJobs(job string) string {
-	url := baseUrl + "search?search=" + job + "&location=&srt=date"
+	space := regexp.MustCompile(`\s+`)
+	vagas := []model.Opportunity{}
+	c := colly.NewCollector(
+		colly.AllowedDomains("flexjobs.com", "www.flexjobs.com"),
+	)
 
-	response, err := http.Get(url)
-	util.CheckError(err)
-	defer response.Body.Close()
+	c.OnHTML("li.m-0", func(element *colly.HTMLElement) {
+		opportunities := element.DOM
 
-	if response.StatusCode > 400 {
-		fmt.Println("Status code:", response.StatusCode)
-	}
-
-	doc, err := goquery.NewDocumentFromReader(response.Body)
-	util.CheckError(err)
-
-	//jobCategory, err := doc.Find("div.job-category-jobs").Html()
-	// jobCategory, err := doc.Find("div.job-category-jobs").Find("a.job-title").Html()
-	// jobCategory, err := doc.Find("div.job-category-jobs").Find("ul.p-0").Html()
-	//jobCategory, err := doc.Find("div.job-category-jobs").Find("li.m-0").Html()
-
-	// var s []string
-
-	// // for _, v := range strings.Split(jobCategory, "data-title=\"") {
-	// 	for _, v := range strings.Split(jobCategory, "<li class=") {
-	// 	s = append(s, v)
-	// 	//fmt.Println(strconv.QuoteRuneToASCII((v)))
-	// }
-	// fmt.Println(s)
-
-	doc.Find("div.job-category-jobs").Find("ul.p-0").Each(func(index int, item *goquery.Selection) {
-		title := item.Find("a.job-title")
-		url, _ := item.Find("li").Attr("data-url")
-		description := item.Find(".job-description")
-		
-		teste := []string{title.Text(), description.Text(), url}
-		fmt.Println(teste)
+		vaga := model.Opportunity{
+			Title:       space.ReplaceAllString(strings.TrimSpace(opportunities.Find("a.job-link").Text()), " "),
+			Description: space.ReplaceAllString(strings.TrimSpace(opportunities.Find("div.job-description").Text()), " "),
+			Date:        "",
+			Url:         opportunities.Find("a.job-link").AttrOr("href", " "),
+		}
+		vagas = append(vagas, vaga)
 	})
 
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Println("Visiting: ", r.URL)
+	})
+
+	c.Visit("https://www.flexjobs.com/search?search=.net+developer&location=&srt=date")
+
+	writeJSON(vagas)
 	return ""
+}
+
+func writeJSON(data []model.Opportunity) {
+	f, err := json.MarshalIndent(data, "", " ")
+	util.CheckError(err)
+
+	_ = ioutil.WriteFile("file-test.json", f, 0644)
 }
