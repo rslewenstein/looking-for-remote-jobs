@@ -1,14 +1,25 @@
 package service
 
 import (
+	"fmt"
 	"looking-for-remote-jobs/src/crawler"
+	"looking-for-remote-jobs/src/model"
 	"strings"
 )
 
-func GetAllOportunities(job string) string {
+func GetTelegramMessage(message string) []model.Opportunity {
+	var result []model.Opportunity
+	if message != "" {
+		result = getAllOportunities(message)
+	} else {
+		fmt.Println("Error to get Telegram message")
+	}
+	return result
+}
+
+func getAllOportunities(job string) []model.Opportunity {
 	result := replaceSpaceForPlus(job)
-	crawler.GetOpportunitiesFlexJobs(result)
-	return ""
+	return crawler.GetOpportunitiesFlexJobs(result)
 }
 
 func replaceSpaceForPlus(text string) string {

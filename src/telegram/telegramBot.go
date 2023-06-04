@@ -3,6 +3,7 @@ package telegram
 import (
 	"fmt"
 	"looking-for-remote-jobs/src/config"
+	"looking-for-remote-jobs/src/model"
 	"looking-for-remote-jobs/src/service"
 	"looking-for-remote-jobs/src/util"
 	"os"
@@ -32,18 +33,22 @@ func SendMessageToTelegram() {
 	updater.Idle()
 }
 
-func receiveMessage(message string) string {
-	text := message
-	fmt.Println("MESSAGE", text)
-	return service.GetAllOportunities(text)
+func receiveMessage(message string) []model.Opportunity {
+	fmt.Println("MESSAGE", message)
+
+	return service.GetTelegramMessage(message)
 }
 
 func sendToTelegram(b ext.Bot, u *gotgbot.Update) error {
 	text := u.EffectiveMessage.Text
 	if text != "" {
-		b.SendMessage(u.EffectiveChat.Id, receiveMessage(text))
+		result := receiveMessage(text)
+		for _, v := range result {
+			b.SendMessage(u.EffectiveChat.Id, v.Url)
+		}
+
 	} else {
-		b.SendMessage(u.EffectiveChat.Id, "Enter a job")
+		b.SendMessage(u.EffectiveChat.Id, "Enter a job title")
 	}
 	return nil
 }

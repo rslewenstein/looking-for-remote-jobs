@@ -16,9 +16,9 @@ const (
 	baseUrl = "https://www.flexjobs.com"
 )
 
-func GetOpportunitiesFlexJobs(job string) string {
+func GetOpportunitiesFlexJobs(job string) []model.Opportunity {
 	space := regexp.MustCompile(`\s+`)
-	vagas := []model.Opportunity{}
+	resultsArray := []model.Opportunity{}
 
 	c := colly.NewCollector(
 		colly.AllowedDomains("flexjobs.com", "www.flexjobs.com"),
@@ -27,13 +27,13 @@ func GetOpportunitiesFlexJobs(job string) string {
 	c.OnHTML("li.m-0", func(element *colly.HTMLElement) {
 		opportunities := element.DOM
 
-		vaga := model.Opportunity{
+		result := model.Opportunity{
 			Title:       space.ReplaceAllString(strings.TrimSpace(opportunities.Find("a.job-link").Text()), " "),
 			Description: space.ReplaceAllString(strings.TrimSpace(opportunities.Find("div.job-description").Text()), " "),
 			Date:        space.ReplaceAllString(strings.TrimSpace(opportunities.Find("div.job-age").Text()), " "),
 			Url:         baseUrl + opportunities.Find("a.job-link").AttrOr("href", " "),
 		}
-		vagas = append(vagas, vaga)
+		resultsArray = append(resultsArray, result)
 	})
 
 	c.OnRequest(func(r *colly.Request) {
@@ -42,8 +42,8 @@ func GetOpportunitiesFlexJobs(job string) string {
 
 	c.Visit(baseUrl + "/search?search=" + job + "&location=&srt=date")
 
-	writeJSON(vagas)
-	return ""
+	writeJSON(resultsArray)
+	return resultsArray
 }
 
 func writeJSON(data []model.Opportunity) {
