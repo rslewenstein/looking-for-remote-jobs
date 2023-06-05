@@ -18,7 +18,11 @@ func GetTelegramMessage(message string) []model.Opportunity {
 }
 
 func getAllOportunities(job string) []model.Opportunity {
+	if job == "" {
+		return nil
+	}
 	result := replaceSpaceForPlus(job)
+	// Todos os métodos referentes as páginas criados no pacote crawler serão chamados aqui
 	return crawler.GetOpportunitiesFlexJobs(result)
 }
 
