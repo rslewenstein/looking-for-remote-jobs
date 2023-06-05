@@ -33,7 +33,10 @@ func GetOpportunitiesFlexJobs(job string) []model.Opportunity {
 			Date:        space.ReplaceAllString(strings.TrimSpace(opportunities.Find("div.job-age").Text()), " "),
 			Url:         baseUrl + opportunities.Find("a.job-link").AttrOr("href", " "),
 		}
-		resultsArray = append(resultsArray, result)
+
+		if result.Date == "New! Today" || result.Date == "New! Yesterday" || result.Date == "New! 2 days ago" {
+			resultsArray = append(resultsArray, result)
+		}
 	})
 
 	c.OnRequest(func(r *colly.Request) {
