@@ -1,0 +1,23 @@
+package service
+
+import (
+	"strings"
+	"testing"
+)
+
+func Test_GetTelegramMessage_ShouldReturnStruct_WhenParameterIsNotNull(t *testing.T) {
+	var tests = []struct {
+		message  string
+		expected string
+	}{
+		{".net developer", "flexjobs.com"},
+	}
+
+	for _, test := range tests {
+		for _, v := range getAllOportunities(test.message) {
+			if !strings.Contains(v.Url, test.expected) {
+				t.Error("Test failed")
+			}
+		}
+	}
+}
