@@ -1,20 +1,15 @@
 package crawler
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"looking-for-remote-jobs/src/model"
-	"looking-for-remote-jobs/src/util"
 	"regexp"
 	"strings"
 
 	"github.com/gocolly/colly"
 )
 
-const (
-	baseUrl = "https://www.flexjobs.com"
-)
+var baseUrl string = "https://www.flexjobs.com"
 
 func GetOpportunitiesFlexJobs(job string) []model.Opportunity {
 	space := regexp.MustCompile(`\s+`)
@@ -45,13 +40,13 @@ func GetOpportunitiesFlexJobs(job string) []model.Opportunity {
 
 	c.Visit(baseUrl + "/search?search=" + job + "&location=&srt=date")
 
-	writeJSON(resultsArray)
+	//writeJSON(resultsArray)
 	return resultsArray
 }
 
-func writeJSON(data []model.Opportunity) {
-	f, err := json.MarshalIndent(data, "", " ")
-	util.CheckError(err)
+// func writeJSON(data []model.Opportunity) {
+// 	f, err := json.MarshalIndent(data, "", " ")
+// 	util.CheckError(err)
 
-	_ = ioutil.WriteFile("file-test.json", f, 0644)
-}
+// 	_ = ioutil.WriteFile("file-test.json", f, 0644)
+// }
