@@ -1,6 +1,7 @@
 go.mod
 go.sum
 file-test.json
+infos.txt
 
 .env
 .vscode

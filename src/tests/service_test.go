@@ -1,6 +1,7 @@
-package service
+package tests
 
 import (
+	"looking-for-remote-jobs/src/service"
 	"strings"
 	"testing"
 )
@@ -14,7 +15,7 @@ func Test_GetTelegramMessage_ShouldReturnResults_WhenParameterIsNotNull(t *testi
 	}
 
 	for _, test := range tests {
-		for _, v := range getAllOportunities(test.message) {
+		for _, v := range service.GetTelegramMessage(test.message) {
 			if !strings.Contains(v.Url, test.expected) {
 				t.Error("Test failed")
 			}
@@ -31,7 +32,7 @@ func Test_GetTelegramMessage_ShouldntReturnResults_WhenParameterIsNull(t *testin
 	}
 
 	for _, test := range tests {
-		for _, v := range getAllOportunities(test.message) {
+		for _, v := range service.GetTelegramMessage(test.message) {
 			if !strings.Contains(v.Url, test.expected) {
 				t.Error("Test failed")
 			}
