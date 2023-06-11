@@ -1,9 +1,11 @@
 package main
 
 import (
-	"looking-for-remote-jobs/src/telegram"
+	"looking-for-remote-jobs/src/crawler"
 )
 
 func main() {
-	telegram.SendMessageToTelegram()
+	//telegram.SendMessageToTelegram()
+
+	crawler.GetOpportunitiesHimalayas("developer")
 }
