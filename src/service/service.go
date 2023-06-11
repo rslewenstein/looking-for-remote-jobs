@@ -31,7 +31,7 @@ func getAllOportunities(job string) []model.Opportunity {
 	}
 
 	// TODO: Words such as DEVELOPER or DEV don't is working.
-	if !strings.Contains(job, "dev") || !(strings.Contains(job, "developer")) {
+	if !(strings.Contains(job, "dev") || strings.Contains(job, "developer")) {
 		for _, v := range crawler.GetOpportunitiesHimalayas(replaced) {
 			arrayResult = append(arrayResult, v)
 		}

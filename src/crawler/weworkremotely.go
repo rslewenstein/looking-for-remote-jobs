@@ -26,8 +26,12 @@ func GetOpportunitiesWeWorkRemotely(job string) []model.Opportunity {
 			Description: space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.region").Text()), " "),
 			Date:        space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.featured").Text()), " "),
 			Url:         baseUrl + opportunities.Find("a").AttrOr("href", " "),
+			Other:       space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.new").Text()), " "),
 		}
-		resultsArray = append(resultsArray, result)
+
+		if result.Other == "New" {
+			resultsArray = append(resultsArray, result)
+		}
 	})
 
 	c.OnRequest(func(r *colly.Request) {
