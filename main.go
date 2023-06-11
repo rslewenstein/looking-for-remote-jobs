@@ -6,6 +6,4 @@ import (
 
 func main() {
 	telegram.SendMessageToTelegram()
-
-	//crawler.GetOpportunitiesHimalayas("developer")
 }
