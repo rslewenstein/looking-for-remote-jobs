@@ -24,7 +24,7 @@ func GetOpportunitiesHimalayas(job string) []model.Opportunity {
 		opportunities := element.DOM
 
 		result := model.Opportunity{
-			Url:  opportunities.Find("a.preventLink").AttrOr("href", " "),
+			Url:  baseUrl + opportunities.Find("a.preventLink").AttrOr("href", " "),
 			Date: space.ReplaceAllString(strings.TrimSpace(opportunities.Find("td.time").Text()), " "),
 		}
 
@@ -58,6 +58,5 @@ func checkLastThreeDays(text string) bool {
 	if number > 3 {
 		checkDay = false
 	}
-
 	return checkDay
 }
