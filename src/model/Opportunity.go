@@ -5,5 +5,4 @@ type Opportunity struct {
 	Description string `json:"description"`
 	Date        string `json:"date"`
 	Url         string `json:"url"`
-	Other       string `json:"other"`
 }

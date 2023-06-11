@@ -24,12 +24,11 @@ func GetOpportunitiesWeWorkRemotely(job string) []model.Opportunity {
 		result := model.Opportunity{
 			Title:       space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.title").Text()), " "),
 			Description: space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.region").Text()), " "),
-			Date:        space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.featured").Text()), " "),
+			Date:        space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.new").Text()), " "),
 			Url:         baseUrl + opportunities.Find("a").AttrOr("href", " "),
-			Other:       space.ReplaceAllString(strings.TrimSpace(opportunities.Find("span.new").Text()), " "),
 		}
 
-		if result.Other == "New" {
+		if result.Date == "New" {
 			resultsArray = append(resultsArray, result)
 		}
 	})
