@@ -37,6 +37,10 @@ func getAllOportunities(job string) []model.Opportunity {
 		}
 	}
 
+	for _, v := range crawler.GetOpportunitiesWeWorkRemotely(replaced) {
+		arrayResult = append(arrayResult, v)
+	}
+
 	return arrayResult
 }
 
