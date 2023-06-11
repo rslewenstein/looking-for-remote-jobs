@@ -3,7 +3,9 @@ package crawler
 import (
 	"fmt"
 	"looking-for-remote-jobs/src/model"
+	"looking-for-remote-jobs/src/util"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/gocolly/colly"
@@ -22,11 +24,13 @@ func GetOpportunitiesHimalayas(job string) []model.Opportunity {
 		opportunities := element.DOM
 
 		result := model.Opportunity{
-			Url:  opportunities.Find("a.preventLink").AttrOr("href", " "),
+			Url:  baseUrl + opportunities.Find("a.preventLink").AttrOr("href", " "),
 			Date: space.ReplaceAllString(strings.TrimSpace(opportunities.Find("td.time").Text()), " "),
 		}
 
-		resultsArray = append(resultsArray, result)
+		if strings.Contains(result.Date, "h") || checkLastThreeDays(result.Date) {
+			resultsArray = append(resultsArray, result)
+		}
 	})
 
 	c.OnRequest(func(r *colly.Request) {
@@ -40,4 +44,19 @@ func GetOpportunitiesHimalayas(job string) []model.Opportunity {
 	c.Visit(baseUrl + "/remote-" + job + "-jobs?order_by=date")
 
 	return resultsArray
+}
+
+func checkLastThreeDays(text string) bool {
+	var results []string
+	var checkDay bool = true
+	if strings.Contains(text, "d") {
+		results = strings.Split(text, "d")
+	}
+
+	number, err := strconv.Atoi(results[0])
+	util.CheckError(err)
+	if number > 3 {
+		checkDay = false
+	}
+	return checkDay
 }
