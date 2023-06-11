@@ -41,6 +41,8 @@ func GetOpportunitiesHimalayas(job string) []model.Opportunity {
 		fmt.Println("Visiting: ", r.URL)
 	})
 
+	//TODO: I don't know what happened. Until yesterday It was working :/
+	// Words such as DEVELOPER or DEV don't is working.
 	c.Visit(baseUrl + "/remote-" + job + "-jobs?order_by=date")
 
 	return resultsArray
