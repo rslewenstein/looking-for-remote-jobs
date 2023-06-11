@@ -9,9 +9,8 @@ import (
 	"github.com/gocolly/colly"
 )
 
-var baseUrl string = "https://www.flexjobs.com"
-
 func GetOpportunitiesFlexJobs(job string) []model.Opportunity {
+	var baseUrl string = "https://www.flexjobs.com"
 	space := regexp.MustCompile(`\s+`)
 	resultsArray := []model.Opportunity{}
 
