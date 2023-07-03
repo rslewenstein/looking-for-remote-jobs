@@ -11,7 +11,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func GetOpportunitiesHimalayas(job string) []model.Opportunity {
+func GetOpportunitiesRemoteOk(job string) []model.Opportunity {
 	var baseUrl string = "https://remoteok.com"
 	space := regexp.MustCompile(`\s+`)
 	resultsArray := []model.Opportunity{}
