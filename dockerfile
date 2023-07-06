@@ -6,7 +6,4 @@ COPY . .
 
 RUN go build -o main .
 
-# Expor a porta que o aplicativo irá utilizar (se necessário)
-EXPOSE 8080
-
 CMD ["./main"]
