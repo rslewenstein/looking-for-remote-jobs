@@ -30,7 +30,7 @@ func getAllOportunities(job string) []model.Opportunity {
 		arrayResult = append(arrayResult, v)
 	}
 
-	// TODO: Words such as DEVELOPER or DEV don't is working.
+	// TODO: Words such as DEVELOPER or DEV isn't working.
 	if !(strings.Contains(job, "dev") || strings.Contains(job, "developer")) {
 		for _, v := range crawler.GetOpportunitiesRemoteOk(replaced) {
 			arrayResult = append(arrayResult, v)

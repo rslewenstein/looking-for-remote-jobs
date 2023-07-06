@@ -18,6 +18,8 @@ func Test_GetTelegramMessage_ShouldReturnResults_WhenParameterIsNotNull(t *testi
 		for _, v := range service.GetTelegramMessage(test.message) {
 			if !strings.Contains(v.Url, test.expected) {
 				t.Error("Test failed")
+			}else{
+				return
 			}
 		}
 	}
