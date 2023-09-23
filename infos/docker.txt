@@ -1,0 +1,25 @@
+***** DOCKERFILE *****
+# Definir a imagem base
+FROM golang:latest
+
+# Definir o diretório de trabalho dentro do contêiner
+WORKDIR /go/src/raiz_diretorio
+
+# Copiar o código-fonte para o diretório de trabalho
+COPY . .
+
+# Compilar o código
+RUN go build -o main .
+
+# Expor a porta que o aplicativo irá utilizar (se necessário)
+EXPOSE 8080
+
+# Executar o aplicativo
+CMD ["./main"]
+******************************************
+
+- para criar o container
+docker build -t nome_do_seu_container .
+
+- Para executar o container
+docker run -p 8080:8080 nome_do_seu_container

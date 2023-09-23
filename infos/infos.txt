@@ -1,0 +1,41 @@
+🌍 FlexJobs (https://www.flexjobs.com/) - ok
+🌍 Crossover (https://lnkd.in/dBjesXhF)
+🌍 JustRemote (https://justremote.co/)
+🌍 Gun.io (https://gun.io/)
+🌍 Jobspresso (https://jobspresso.co/)
+🌍 Himalayas (https://himalayas.app/) - ??
+🌍 Hired (https://hired.com/)
+🌍 Click Worker (https://lnkd.in/d8zv7pru)
+🌍 Remote Ok (https://remoteok.com/) - ok
+🌍 Upwork (https://www.upwork.com/)
+🌍 We Work Remotely (https://lnkd.in/dnCMWRyP) --
+🌍 Wellfound (https://wellfound.com/jobs)
+🌍 Arc.dev (https://arc.dev/)
+🌍 Authentic Jobs, Inc. (https://authenticjobs.com/)
+🌍 Working Nomads (https://lnkd.in/dC-TCjhV)
+
+🌎 Vagas de Emprego em Portugal - Remote Around (https://lnkd.in/depsSRir)
+🌎 Ubiminds (https://lnkd.in/dF8mqBBh)
+🌎 Pride Recruiter (https://lnkd.in/dGMwrUj8)
+🌎 Remotive - Remote Jobs (https://remotive.io/)
+🌎 Pangian (https://pangian.com/)
+🌎 Remoters (https://remoters.net/)
+🌎 No Desk (https://nodesk.co/)
+🌎 Remote.co (https://remote.co/)
+🌎 Skip The Drive LLC (https://lnkd.in/drHZ2MvX)
+🌎 Virtual Vocations, Inc. (https://lnkd.in/d2zBmJtn)
+🌎 Indeed.com [Remote Jobs] (https://lnkd.in/duysWAAy)
+🌎 Dynamite Jobs (https://lnkd.in/dR39J4pH)
+🌎 RemoteHub (https://remotehub.io/)
+🌎 Remote Leaf (https://remoteleaf.com/)
+🌎 Guru.com (https://www.guru.com/)
+🌎 Toptal (https://lnkd.in/d6xd7qM2)
+🌎 freelancermap.com (https://lnkd.in/djTMHtdc)
+📱 MeetFrank [app] (https://meetfrank.com/)
+
+1 - Adicionar outros testes
+2 - Adicionar os outros sites
+3 - Criar o dockerfile
+4 - criar API
+5 - criar um front end
+6 - criar healthcheck
